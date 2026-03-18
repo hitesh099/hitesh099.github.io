@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hitesh Patil — Performance Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080c10;
+  --bg2: #0d1117;
+  --bg3: #111820;
+  --accent: #00e5ff;
+  --accent2: #00b4cc;
+  --accent-glow: rgba(0,229,255,0.15);
+  --accent-glow2: rgba(0,229,255,0.06);
+  --text: #e8edf2;
+  --text2: #8899aa;
+  --text3: #556677;
+  --border: rgba(0,229,255,0.12);
+  --border2: rgba(255,255,255,0.06);
+  --card: rgba(13,17,23,0.95);
+  --mono: 'Space Mono', monospace;
+  --display: 'Syne', sans-serif;
+  --body: 'Inter', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 2px; }
+
+/* ── Noise overlay ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: .4;
+}
+
+/* ── Grid background ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Nav ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 3rem;
+  background: rgba(8,12,16,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: .05em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text2);
+  text-decoration: none;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  transition: color .2s;
+}
+
+.nav-links a:hover { color: var(--accent); }
+
+/* ── Sections ── */
+section {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 7rem 2rem;
+}
+
+/* ── Hero ── */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 8rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.hero-tag {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp .6s .2s forwards;
+}
+
+.hero-name {
+  font-family: var(--display);
+  font-size: clamp(3.5rem, 9vw, 7.5rem);
+  font-weight: 800;
+  line-height: .95;
+  letter-spacing: -.02em;
+  color: var(--text);
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: fadeUp .7s .35s forwards;
+}
+
+.hero-name span {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--accent);
+}
+
+.hero-title {
+  font-family: var(--display);
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  font-weight: 500;
+  color: var(--text2);
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp .7s .5s forwards;
+}
+
+.hero-desc {
+  font-size: 16px;
+  color: var(--text2);
+  max-width: 560px;
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  animation: fadeUp .7s .65s forwards;
+}
+
+.hero-metrics {
+  display: flex;
+  gap: 2.5rem;
+  margin-bottom: 3rem;
+  opacity: 0;
+  animation: fadeUp .7s .8s forwards;
+}
+
+.metric-item {}
+.metric-num {
+  font-family: var(--display);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+}
+.metric-label {
+  font-size: 12px;
+  color: var(--text3);
+  letter-spacing: .05em;
+  margin-top: .2rem;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp .7s .95s forwards;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .8rem 1.8rem;
+  background: var(--accent);
+  color: var(--bg);
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-decoration: none;
+  border-radius: 3px;
+  transition: all .2s;
+  border: none;
+  cursor: pointer;
+}
+.btn-primary:hover {
+  background: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,229,255,0.3);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .8rem 1.8rem;
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: .05em;
+  text-decoration: none;
+  border-radius: 3px;
+  border: 1px solid var(--accent);
+  transition: all .2s;
+}
+.btn-outline:hover {
+  background: var(--accent-glow);
+  transform: translateY(-2px);
+}
+
+/* ── Section headers ── */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 3.5rem;
+}
+
+.section-num {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: .1em;
+}
+
+.section-title {
+  font-family: var(--display);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -.02em;
+}
+
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  max-width: 200px;
+}
+
+/* ── About ── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.about-text p {
+  color: var(--text2);
+  margin-bottom: 1.2rem;
+  font-size: 15px;
+  line-height: 1.85;
+}
+
+.about-text p strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.about-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.highlight-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: border-color .2s, transform .2s;
+}
+.highlight-card:hover {
+  border-color: var(--accent);
+  transform: translateX(4px);
+}
+
+.highlight-icon {
+  font-size: 1.5rem;
+  width: 44px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.highlight-content {}
+.highlight-num {
+  font-family: var(--display);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+}
+.highlight-desc {
+  font-size: 12px;
+  color: var(--text2);
+  margin-top: .15rem;
+}
+
+/* ── Skills ── */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+
+.skill-category {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 1.5rem;
+  transition: border-color .25s;
+}
+.skill-category:hover { border-color: var(--border); }
+
+.skill-cat-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  padding-bottom: .75rem;
+  border-bottom: 1px solid var(--border2);
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+.skill-tag {
+  background: rgba(0,229,255,0.07);
+  border: 1px solid rgba(0,229,255,0.15);
+  color: var(--text);
+  font-size: 12px;
+  padding: .3rem .8rem;
+  border-radius: 3px;
+  font-family: var(--mono);
+  transition: all .2s;
+}
+.skill-tag:hover {
+  background: rgba(0,229,255,0.15);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── Experience ── */
+.exp-timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.exp-timeline::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 8px; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+}
+
+.exp-item {
+  position: relative;
+  margin-bottom: 3rem;
+  padding-left: 2rem;
+}
+
+.exp-item::before {
+  content: '';
+  position: absolute;
+  left: -2.4rem;
+  top: 8px;
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--accent);
+}
+
+.exp-period {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: .1em;
+  margin-bottom: .4rem;
+}
+
+.exp-role {
+  font-family: var(--display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: .2rem;
+}
+
+.exp-company {
+  font-size: 14px;
+  color: var(--text2);
+  margin-bottom: 1rem;
+}
+
+.exp-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+}
+
+.exp-bullets li {
+  font-size: 14px;
+  color: var(--text2);
+  padding-left: 1.2rem;
+  position: relative;
+  line-height: 1.7;
+}
+
+.exp-bullets li::before {
+  content: '▹';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 12px;
+  top: 3px;
+}
+
+.exp-bullets li strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ── Projects ── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.project-card {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  transition: all .25s;
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity .25s;
+}
+
+.project-card:hover {
+  border-color: var(--border);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.project-card:hover::before { opacity: 1; }
+
+.project-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+}
+
+.project-icon { font-size: 1.8rem; }
+
+.project-links { display: flex; gap: .75rem; }
+.project-link {
+  color: var(--text2);
+  text-decoration: none;
+  font-size: 13px;
+  font-family: var(--mono);
+  letter-spacing: .05em;
+  transition: color .2s;
+  border: 1px solid var(--border2);
+  padding: .3rem .7rem;
+  border-radius: 3px;
+}
+.project-link:hover { color: var(--accent); border-color: var(--accent); }
+
+.project-title {
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: .6rem;
+}
+
+.project-desc {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.75;
+  flex: 1;
+  margin-bottom: 1.25rem;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+}
+
+.project-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent2);
+  letter-spacing: .05em;
+}
+
+.project-tag::before { content: '#'; opacity: .5; }
+
+/* ── Certifications ── */
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.cert-card {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  transition: all .25s;
+}
+.cert-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 30px var(--accent-glow2);
+  transform: translateY(-2px);
+}
+
+.cert-badge {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--accent-glow);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.cert-info {}
+.cert-name {
+  font-family: var(--display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: .25rem;
+}
+.cert-issuer {
+  font-size: 12px;
+  color: var(--accent);
+  font-family: var(--mono);
+  letter-spacing: .05em;
+}
+.cert-status {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: .2rem;
+}
+
+/* ── Education strip ── */
+.edu-strip {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 4rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--border2);
+}
+
+.edu-item {
+  flex: 1;
+  min-width: 260px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+
+.edu-degree {
+  font-family: var(--display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: .25rem;
+}
+.edu-school { font-size: 13px; color: var(--accent); font-family: var(--mono); font-size: 12px; }
+.edu-year { font-size: 12px; color: var(--text3); margin-top: .15rem; }
+
+/* ── Contact ── */
+.contact-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.contact-text {}
+.contact-text h3 {
+  font-family: var(--display);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+.contact-text p {
+  color: var(--text2);
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: .85rem;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all .2s;
+}
+.contact-link:hover {
+  border-color: var(--accent);
+  background: var(--accent-glow2);
+  transform: translateX(4px);
+}
+.contact-link-icon {
+  font-size: 1.1rem;
+  width: 36px;
+  text-align: center;
+}
+.contact-link-info {}
+.contact-link-label {
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--text3);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.contact-link-val {
+  font-size: 14px;
+  color: var(--text);
+  margin-top: .1rem;
+}
+
+.contact-availability {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 2rem;
+}
+
+.avail-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.avail-items { display: flex; flex-direction: column; gap: .75rem; }
+
+.avail-item {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  font-size: 14px;
+  color: var(--text2);
+}
+
+.avail-dot {
+  width: 8px; height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px var(--accent);
+  animation: pulse 2s infinite;
+}
+
+/* ── Footer ── */
+footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 2.5rem;
+  border-top: 1px solid var(--border2);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text3);
+  letter-spacing: .05em;
+}
+
+footer span { color: var(--accent); }
+
+/* ── Animations ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .5; transform: scale(1.3); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.25rem; }
+  .nav-links { display: none; }
+  section { padding: 5rem 1.25rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .hero-metrics { gap: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">hp.dev</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-tag">// Performance Engineer · AWS · Dynatrace · Kubernetes</div>
+  <h1 class="hero-name">Hitesh<br><span>Patil</span></h1>
+  <div class="hero-title">Performance Engineer & Observability Specialist</div>
+  <p class="hero-desc">I build frameworks and pipelines that keep enterprise systems fast, scalable, and observable under real-world load — from 10K+ concurrent users to full CI/CD integration.</p>
+  <div class="hero-metrics">
+    <div class="metric-item">
+      <div class="metric-num">5+</div>
+      <div class="metric-label">Years Experience</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-num">40%</div>
+      <div class="metric-label">Response Time Gain</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-num">30%</div>
+      <div class="metric-label">MTTR Reduction</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-num">10K+</div>
+      <div class="metric-label">Concurrent Users</div>
+    </div>
+  </div>
+  <div class="hero-ctas">
+    <a href="#projects" class="btn-primary">View Projects →</a>
+    <a href="#contact" class="btn-outline">Get In Touch</a>
+    <a href="https://github.com/hitesh099" target="_blank" class="btn-outline">GitHub ↗</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">About Me</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I'm a <strong>Performance Engineer</strong> with 5+ years of experience designing, executing, and optimizing performance testing strategies for enterprise web, API, microservices, and cloud-based systems.</p>
+      <p>At <strong>RadixBit Technologies</strong>, I led end-to-end performance engineering across the full SDLC — from capacity planning and requirements gathering to root cause analysis and CI/CD integration. I worked closely with developers, SREs, and product owners to build reliable, scalable applications for production.</p>
+      <p>I specialize in <strong>JVM tuning, Dynatrace APM, AWS benchmarking,</strong> and integrating performance testing into DevOps pipelines — so performance is a first-class citizen, not an afterthought.</p>
+      <p>Currently completing my <strong>MS in Computer Science</strong> at the University of Alabama at Birmingham, adding theoretical depth to hands-on expertise.</p>
+      <div style="margin-top:1.5rem">
+        <a href="https://www.linkedin.com/in/hiteshpatil2555" target="_blank" class="btn-outline" style="display:inline-flex">LinkedIn ↗</a>
+      </div>
+    </div>
+    <div class="about-highlights reveal">
+      <div class="highlight-card">
+        <div class="highlight-icon">⚡</div>
+        <div class="highlight-content">
+          <div class="highlight-num">40%</div>
+          <div class="highlight-desc">Response time improvement via JVM heap & GC optimization</div>
+        </div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">📉</div>
+        <div class="highlight-content">
+          <div class="highlight-num">30%</div>
+          <div class="highlight-desc">MTTR reduction through Dynatrace observability dashboards</div>
+        </div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">👥</div>
+        <div class="highlight-content">
+          <div class="highlight-num">10,000+</div>
+          <div class="highlight-desc">Concurrent users simulated on AWS & OpenShift</div>
+        </div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">🔄</div>
+        <div class="highlight-content">
+          <div class="highlight-num">10+</div>
+          <div class="highlight-desc">Production apps under continuous performance testing</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Skills & Stack</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-category reveal">
+      <div class="skill-cat-title">Performance Testing</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Apache JMeter</span>
+        <span class="skill-tag">LoadRunner</span>
+        <span class="skill-tag">BlazeMeter</span>
+        <span class="skill-tag">Performance Center</span>
+        <span class="skill-tag">Load Testing</span>
+        <span class="skill-tag">Stress Testing</span>
+        <span class="skill-tag">Soak Testing</span>
+        <span class="skill-tag">Spike Testing</span>
+      </div>
+    </div>
+    <div class="skill-category reveal">
+      <div class="skill-cat-title">Monitoring & Observability</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Dynatrace</span>
+        <span class="skill-tag">Grafana</span>
+        <span class="skill-tag">Prometheus</span>
+        <span class="skill-tag">Splunk</span>
+        <span class="skill-tag">New Relic</span>
+        <span class="skill-tag">AWS CloudWatch</span>
+        <span class="skill-tag">Distributed Tracing</span>
+      </div>
+    </div>
+    <div class="skill-category reveal">
+      <div class="skill-cat-title">Cloud & Containers</div>
+      <div class="skill-tags">
+        <span class="skill-tag">AWS EC2</span>
+        <span class="skill-tag">AWS RDS</span>
+        <span class="skill-tag">Docker</span>
+        <span class="skill-tag">Kubernetes</span>
+        <span class="skill-tag">OpenShift</span>
+        <span class="skill-tag">Azure</span>
+        <span class="skill-tag">GCP</span>
+      </div>
+    </div>
+    <div class="skill-category reveal">
+      <div class="skill-cat-title">CI/CD & DevOps</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Jenkins</span>
+        <span class="skill-tag">GitLab CI</span>
+        <span class="skill-tag">Azure DevOps</span>
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">Performance Automation</span>
+      </div>
+    </div>
+    <div class="skill-category reveal">
+      <div class="skill-cat-title">Database & Tuning</div>
+      <div class="skill-tags">
+        <span class="skill-tag">MySQL</span>
+        <span class="skill-tag">PostgreSQL</span>
+        <span class="skill-tag">MongoDB</span>
+        <span class="skill-tag">Query Optimization</span>
+        <span class="skill-tag">Index Tuning</span>
+        <span class="skill-tag">Deadlock Resolution</span>
+      </div>
+    </div>
+    <div class="skill-category reveal">
+      <div class="skill-cat-title">Languages & Architecture</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Bash</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">REST APIs</span>
+        <span class="skill-tag">Microservices</span>
+        <span class="skill-tag">JVM Tuning</span>
+        <span class="skill-tag">Heap Dump Analysis</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Experience</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="exp-timeline">
+    <div class="exp-item reveal">
+      <div class="exp-period">JAN 2018 — DEC 2023</div>
+      <div class="exp-role">Performance Engineer</div>
+      <div class="exp-company">RadixBit Technologies Pvt. Ltd · Pune, India · Full-time</div>
+      <ul class="exp-bullets">
+        <li>Designed and executed <strong>load, stress, spike, soak & endurance tests</strong> using JMeter and LoadRunner for microservices on OpenShift/Kubernetes, simulating <strong>10,000+ concurrent users</strong></li>
+        <li>Reduced MTTR by <strong>30%</strong> by deploying enterprise-wide Dynatrace observability across AWS EC2, VMs, and OpenShift — including tenant config, cluster upgrades, and ActiveGate deployments</li>
+        <li>Improved response times by <strong>40%</strong> through JVM performance tuning: heap resizing, GC strategy optimization, and thread/heap dump root cause analysis</li>
+        <li>Integrated performance test automation into <strong>Jenkins and GitLab CI/CD pipelines</strong>, shifting performance-left and catching regressions at commit time</li>
+        <li>Benchmarked <strong>AWS EC2 and RDS workloads</strong> — analyzing CPU, memory, IOPS, and query latency — to drive data-driven instance resizing and capacity planning</li>
+        <li>Optimized database performance via <strong>index tuning, execution plan analysis, deadlock resolution</strong> and connection pool right-sizing across MySQL, PostgreSQL, and MongoDB</li>
+        <li>Delivered monthly and semi-annual performance & capacity reports; mentored onshore/offshore APM engineering teams</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Education -->
+  <div class="edu-strip reveal">
+    <div class="edu-item">
+      <div class="edu-degree">MS, Computer Science</div>
+      <div class="edu-school">University of Alabama at Birmingham</div>
+      <div class="edu-year">2024 – 2025 · Birmingham, AL</div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-degree">BE, Information Technology</div>
+      <div class="edu-school">JSPM College of Engineering</div>
+      <div class="edu-year">2014 – 2018 · Pune, India</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Projects</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid">
+
+    <div class="project-card reveal" style="grid-column: span 2;">
+      <div class="project-top">
+        <div class="project-icon">🚀</div>
+        <div class="project-links">
+          <a href="https://github.com/hitesh099/jmeter-performance-framework" target="_blank" class="project-link">GitHub ↗</a>
+        </div>
+      </div>
+      <div class="project-title">JMeter Performance Testing Framework</div>
+      <div class="project-desc">Production-grade, reusable framework for load, stress, spike, soak & endurance testing of microservices and REST APIs. Features CSV-driven data injection for 10,000+ concurrent users, automated threshold-based pass/fail logic, HTML report generation, and full Jenkins & GitLab CI/CD pipeline integration. Supports Dev/Staging/Prod via a single config switch with Docker support.</div>
+      <div class="project-tags">
+        <span class="project-tag">jmeter</span>
+        <span class="project-tag">python</span>
+        <span class="project-tag">jenkins</span>
+        <span class="project-tag">gitlab-ci</span>
+        <span class="project-tag">docker</span>
+        <span class="project-tag">kubernetes</span>
+        <span class="project-tag">aws</span>
+        <span class="project-tag">load-testing</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-top">
+        <div class="project-icon">📊</div>
+        <div class="project-links">
+          <a href="https://github.com/hitesh099" target="_blank" class="project-link">Coming Soon</a>
+        </div>
+      </div>
+      <div class="project-title">Grafana + Prometheus Monitoring Dashboard</div>
+      <div class="project-desc">Self-hosted observability stack with pre-built dashboards for JMeter results, JVM metrics, and Kubernetes pod health. Docker Compose setup — zero config required to spin up.</div>
+      <div class="project-tags">
+        <span class="project-tag">grafana</span>
+        <span class="project-tag">prometheus</span>
+        <span class="project-tag">docker</span>
+        <span class="project-tag">kubernetes</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-top">
+        <div class="project-icon">☁️</div>
+        <div class="project-links">
+          <a href="https://github.com/hitesh099" target="_blank" class="project-link">Coming Soon</a>
+        </div>
+      </div>
+      <div class="project-title">AWS Performance Benchmarking Toolkit</div>
+      <div class="project-desc">Python scripts that benchmark EC2 and RDS workloads — CPU, memory, IOPS, query latency — and auto-generate capacity planning reports with resize recommendations.</div>
+      <div class="project-tags">
+        <span class="project-tag">aws-ec2</span>
+        <span class="project-tag">rds</span>
+        <span class="project-tag">python</span>
+        <span class="project-tag">cloudwatch</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-header reveal">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Certifications</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="certs-grid">
+    <div class="cert-card reveal">
+      <div class="cert-badge">🏅</div>
+      <div class="cert-info">
+        <div class="cert-name">AWS Solutions Architect – Associate</div>
+        <div class="cert-issuer">Amazon Web Services</div>
+        <div class="cert-status">SAA-C03 · Active</div>
+      </div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-badge">🏅</div>
+      <div class="cert-info">
+        <div class="cert-name">Dynatrace Associate Certified</div>
+        <div class="cert-issuer">Dynatrace</div>
+        <div class="cert-status">APM & Observability · Active</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header reveal">
+    <span class="section-num">06</span>
+    <h2 class="section-title">Contact</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contact-inner">
+    <div class="contact-text reveal">
+      <h3>Let's work together.</h3>
+      <p>I'm actively looking for Performance Engineer, SRE, DevOps, and Observability roles in the US. If you're building something that needs to be fast and reliable at scale — let's talk.</p>
+      <div class="contact-links">
+        <a href="mailto:hiteshdpatil1@gmail.com" class="contact-link">
+          <div class="contact-link-icon">✉️</div>
+          <div class="contact-link-info">
+            <div class="contact-link-label">Email</div>
+            <div class="contact-link-val">hiteshdpatil1@gmail.com</div>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/hiteshpatil2555" target="_blank" class="contact-link">
+          <div class="contact-link-icon">💼</div>
+          <div class="contact-link-info">
+            <div class="contact-link-label">LinkedIn</div>
+            <div class="contact-link-val">linkedin.com/in/hiteshpatil2555</div>
+          </div>
+        </a>
+        <a href="https://github.com/hitesh099" target="_blank" class="contact-link">
+          <div class="contact-link-icon">🐙</div>
+          <div class="contact-link-info">
+            <div class="contact-link-label">GitHub</div>
+            <div class="contact-link-val">github.com/hitesh099</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="contact-availability reveal">
+      <div class="avail-title">// Current Status</div>
+      <div class="avail-items">
+        <div class="avail-item"><div class="avail-dot"></div>Open to full-time roles in the US</div>
+        <div class="avail-item"><div class="avail-dot"></div>Available for interviews immediately</div>
+        <div class="avail-item"><div class="avail-dot"></div>Performance Engineer · SRE · DevOps</div>
+        <div class="avail-item"><div class="avail-dot"></div>North Bergen, NJ — open to remote</div>
+        <div class="avail-item"><div class="avail-dot"></div>MS CS @ UAB — graduating 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Designed & built by <span>Hitesh Patil</span> · Performance Engineer · North Bergen, NJ</p>
+</footer>
+
+<script>
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+
+// Active nav link
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 200) current = s.getAttribute('id');
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
+  });
+});
+
+// Span grid cards to full width on small screens
+const featuredCard = document.querySelector('.project-card[style*="span 2"]');
+function checkGrid() {
+  if (window.innerWidth < 700 && featuredCard) featuredCard.style.gridColumn = 'span 1';
+  else if (featuredCard) featuredCard.style.gridColumn = 'span 2';
+}
+checkGrid();
+window.addEventListener('resize', checkGrid);
+</script>
+</body>
+</html>
